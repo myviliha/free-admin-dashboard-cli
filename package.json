@@ -1,6 +1,6 @@
 {
   "name": "@viliha/free-admin-dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Scaffold a free MIT licensed VuiAdmin admin dashboard in React, Next.js, Vue, Angular, HTML or Laravel.",
   "keywords": [
     "admin-dashboard",
@@ -47,6 +47,7 @@
   },
   "scripts": {
     "test": "node --test \"test/**/*.test.mjs\"",
-    "check-refs": "node scripts/check-refs.mjs"
+    "check-refs": "node scripts/check-refs.mjs",
+    "release": "npm publish --access public && cd create && npm publish --access public"
   }
 }

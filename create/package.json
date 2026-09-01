@@ -1,6 +1,6 @@
 {
   "name": "@viliha/create-free-admin-dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "npm create alias for @viliha/free-admin-dashboard. Scaffold a free MIT licensed VuiAdmin admin dashboard.",
   "keywords": [
     "admin-dashboard",
@@ -34,6 +34,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@viliha/free-admin-dashboard": "0.1.0"
+    "@viliha/free-admin-dashboard": "0.1.1"
   }
 }

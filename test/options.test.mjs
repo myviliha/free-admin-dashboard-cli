@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { DEFAULT_EDITION } from "../lib/editions.mjs";
-import { DEFAULT_PM, detectPM, parseArgs } from "../lib/options.mjs";
+import { DEFAULT_PM, defaultPM, detectPM, parseArgs } from "../lib/options.mjs";
 
 describe("editions", () => {
   it("takes the js-suffixed alias and the plain slug as the same thing", () => {
@@ -56,10 +56,30 @@ describe("package manager", () => {
     assert.equal(DEFAULT_PM, "pnpm");
   });
 
-  it("reads the user agent, so `npm create` installs with npm", () => {
-    assert.equal(detectPM("npm/10.2.4 node/v20.11.0 darwin arm64"), "npm");
+  it("reads an unambiguous launcher, so `bunx` installs with bun", () => {
     assert.equal(detectPM("yarn/1.22.19 npm/? node/v20.11.0 darwin arm64"), "yarn");
     assert.equal(detectPM("bun/1.1.0 npm/? node/v22.0.0 darwin arm64"), "bun");
+    assert.equal(detectPM("pnpm/9.1.0 npm/? node/v20.11.0 darwin arm64"), "pnpm");
+  });
+
+  it("ignores npm's user agent, because npx sets it too", () => {
+    // This is the whole point of the default. `npx @viliha/free-admin-dashboard` and
+    // `npm create @viliha/free-admin-dashboard` are indistinguishable here, both reporting
+    // `npm/...`, and npx is how nearly everyone runs this. Honouring it made pnpm the documented
+    // default and npm the real one, which was caught only by running the published package.
+    assert.equal(detectPM("npm/10.2.4 node/v20.11.0 darwin arm64"), null);
+    assert.equal(parseArgs([], "npm/10.2.4 node/v20.11.0 darwin arm64").pm, "pnpm");
+  });
+
+  it("still takes --npm from someone who wants npm", () => {
+    assert.equal(parseArgs(["--npm"], "npm/10.2.4 node/v20.11.0").pm, "npm");
+  });
+
+  it("falls back to npm when pnpm is not installed", () => {
+    // Defaulting to a tool the user does not have would turn a working scaffold into a failed
+    // install at the very last step, after everything had already been downloaded.
+    assert.equal(defaultPM(() => false), "npm");
+    assert.equal(defaultPM(() => true), "pnpm");
   });
 
   it("does not mistake pnpm for npm", () => {
