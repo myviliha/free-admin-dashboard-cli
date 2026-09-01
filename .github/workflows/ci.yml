@@ -1,0 +1,37 @@
+# Every push runs the offline suite. The end-to-end test, which downloads all six editions, runs on
+# a schedule instead: it is the one that can go red because GitHub is having a bad morning, and a
+# red build that means "not our fault" teaches people to stop reading build results.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Monday morning, to catch a pinned commit that has been force-pushed away under us.
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: 22
+
+      - run: npm test
+
+      # The real download, on a schedule and on demand only.
+      - if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: VUI_E2E=1 npm test
+
+      # Reports rather than fails: a pin being behind main is normal for most of a release cycle.
+      - if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: npm run check-refs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

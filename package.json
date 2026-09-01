@@ -1,0 +1,52 @@
+{
+  "name": "@viliha/free-admin-dashboard",
+  "version": "0.1.0",
+  "description": "Scaffold a free MIT licensed VuiAdmin admin dashboard in React, Next.js, Vue, Angular, HTML or Laravel.",
+  "keywords": [
+    "admin-dashboard",
+    "admin-template",
+    "dashboard-template",
+    "tailwindcss",
+    "react",
+    "nextjs",
+    "vue",
+    "angular",
+    "laravel",
+    "scaffold",
+    "starter",
+    "free"
+  ],
+  "homepage": "https://docs.viliha.com",
+  "bugs": "https://github.com/myviliha/free-admin-dashboard-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myviliha/free-admin-dashboard-cli.git"
+  },
+  "license": "MIT",
+  "author": "VILIHA PTE. LTD.",
+  "type": "module",
+  "bin": {
+    "free-admin-dashboard": "bin/cli.mjs",
+    "vuiadmin": "bin/cli.mjs"
+  },
+  "exports": {
+    "./bin/cli.mjs": "./bin/cli.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "check-refs": "node scripts/check-refs.mjs"
+  }
+}

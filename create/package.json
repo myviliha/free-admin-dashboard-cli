@@ -1,0 +1,39 @@
+{
+  "name": "@viliha/create-free-admin-dashboard",
+  "version": "0.1.0",
+  "description": "npm create alias for @viliha/free-admin-dashboard. Scaffold a free MIT licensed VuiAdmin admin dashboard.",
+  "keywords": [
+    "admin-dashboard",
+    "admin-template",
+    "create",
+    "scaffold",
+    "starter",
+    "free"
+  ],
+  "homepage": "https://docs.viliha.com",
+  "bugs": "https://github.com/myviliha/free-admin-dashboard-cli/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myviliha/free-admin-dashboard-cli.git",
+    "directory": "create"
+  },
+  "license": "MIT",
+  "author": "VILIHA PTE. LTD.",
+  "type": "module",
+  "bin": {
+    "create-free-admin-dashboard": "bin.mjs"
+  },
+  "files": [
+    "bin.mjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@viliha/free-admin-dashboard": "0.1.0"
+  }
+}
